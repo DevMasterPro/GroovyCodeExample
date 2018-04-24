@@ -1,0 +1,43 @@
+def taskID ="Task1234"
+def TicketID = "TK123456"
+def RequestType = "Fault"
+
+
+def CIs ="[ciname1,cilocation1,CMTS1][ciname2,cilocation2,CMTS2][ciname3,cilocation3,CMTS3][ciname4,cilocation4,CMTS4]"
+def engineerList ="[eng1,engID1,Phone1,group1][eng2,engID2,Phone2,group2]"
+
+
+def parseStringToArray(String arrayString){
+    arrayString = arrayString.replaceAll("\\[",'')
+    def array = arrayString.split("]") // array of ciname1,cilocation1,CMTS1
+
+    def arrayList = new ArrayList();
+    //loop array of ciname1,cilocation1,CMTS1
+    array.each{
+        //split by , to ciname1, cilocation1, CMTS
+        def subArray = it.split(",")
+        //att to list
+        arrayList.add(subArray)
+    }
+
+    return arrayList
+}
+
+
+//parse cis
+def ciList = parseStringToArray(CIs)
+def engList = parseStringToArray(engineerList)
+
+//print
+engList.each{ eng->
+    ciList.each{ ci->
+        println(ci[0])
+        println(ci[1])
+        println(ci[2])
+        println(eng[0])
+        println(eng[1])
+        println(eng[2])
+        println(eng[3])
+        println("\n")
+    }
+}
