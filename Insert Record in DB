@@ -1,0 +1,91 @@
+
+import com.resolve.persistence.util.EntityUtil
+
+def condition = "GOOD"
+def severity = "GOOD"
+def detail = ""
+def summary = ""
+def result =""
+
+	//Getting the PARAMS details via Input parameters 
+	def ticketId = INPUTS.TICKET_ID //validation required
+	def taskId = INPUTS.TASK_ID; // validation not required
+	def requestType = INPUTS.REQUEST_TYPE; //Validation required
+	def projectCode = INPUTS.PROJECT_CODE; //  Validation not required
+	def cis = INPUTS.CIS; // validation required for the fileds inside the list
+	def engineers = INPUTS.ENGINEERS; //validations required for the field inside the list
+	def table = INPUTS.TABLE_NAME; // getting the table name
+	
+	//parsing the data out form a list
+		def parseStringToArray(String arrayString){
+			// replacing empty value with whitespace
+			def replaceEmptyValue = arrayString.replaceAll(",]",", ]").replaceAll("\\[,","[ ,").replaceAll(",,",", ,")
+			// replacing the first square bracket
+		    arrayString = replaceEmptyValue.replaceAll("\\[",'')
+		     // spliting the list and adding it to an array
+		     // array of ciname1,cilocation1,CMTS1
+		    def array = arrayString.split("]") 
+		    def arrayList = new ArrayList();
+			    array.each{
+			        def subArray = it.split(",")
+			        arrayList.add(subArray)
+			    }
+		    return arrayList
+		}
+	
+	// initiating try and catch
+	try{
+			// Parse CI(S) and Engineer(S)
+			def ciList = parseStringToArray(cis)
+			def engList = parseStringToArray(engineers)
+			
+			
+			engList.each{ eng->
+		    	ciList.each{ ci->
+		    		// initialising a map to hold the record
+		    	 	Map newEntry = new HashMap()
+		    	 	
+			       if(ticketId)		{ newEntry.put('u_ticket_id', ticketId.toString())} //adding ticket id to map 
+			       if(requestType)	{ newEntry.put('u_ticket_type', requestType.toString())} // adding request type into the map 
+			       if(taskId)	    { newEntry.put('u_task_id', taskId.toString())} // adding request type into the map 
+			       if(projectCode)	    { newEntry.put('u_project_code', taskId.toString())} // adding request type into the map 
+			    
+			       if(ci[0].toString().trim())	{ newEntry.put('u_ci_name', ci[0].toString()) } // adding CI name to the Map
+			       if(ci[1].toString().trim())	{ newEntry.put('u_ci_location', ci[1].toString()) } // adding ci location to the map
+			       if(ci[2].toString().trim())	{ newEntry.put('u_cmts_id', ci[2].toString())} // adding cmts ID to the map 
+			       if(eng[0].toString().trim())	{ newEntry.put('u_engineer_name', eng[0].toString()) } // adding Engineer name the map
+			       if(eng[1].toString().trim()) { newEntry.put('u_engineer_id', eng[1].toString()) } // adding engineer id to the map
+			       if(eng[2].toString().trim()) { newEntry.put('u_engineer_phone', eng[2].toString()) } // adding engineer phone to the map
+			       if(eng[3].toString().trim()) { newEntry.put('u_group', eng[3].toString()) } // Adding engineer group to map
+			 
+			 	   Map insertResult = EntityUtil.persist(table, newEntry) //persist() will insert an entry, and if there is already something there, it will attempt to update the entry instead
+			 			
+			 		detail += "\n*****ENTRY*****\n"
+						insertResult.each {
+							detail += "\t ${it.key}:${it.value}\n"
+						}
+		    	}
+			}
+		
+	}
+	// catch block
+	catch (Exception ex){	
+		result += "Error: \n " + ex.getMessage(); 
+	}
+	
+	// checking if the execution was successfull, if not successfull setting the condition and severity to BAD
+	if (result.contains("Error")){	
+			condition = "BAD"
+			severity = "BAD"
+			summary = "Failed to insert record due to database error."
+			detail += result
+	}
+	// if successfull putting the success error message in the summary. 
+	else {
+		summary = "Successfully stored the record into ECH."
+	}
+		
+RESULT.condition = condition
+RESULT.severity = severity
+RESULT.summary = summary
+RESULT.detail = detail
