@@ -1,10 +1,10 @@
-def taskID ="Task1234"
-def TicketID = "TK123456"
-def RequestType = "Fault"
+def taskID ="Task id "
+def TicketID = "Ticket id"
+def RequestType = "Request Type name"
 def result
 
-def CIs ="[,,][ciname2,cilocation2,cmts2][ciname3,cilocation3,]"
-def engineerList ="[eng1,engID1,Phone1,group1][eng2,engID2,Phone2,group2]"
+def listvalu1 ="[,,][v2,v2,v2][v3,v3,]"
+def listvalue2 ="[value*1,value*1,value*1,value*1][value*2,value*2,value*2,value*2]"
 
 
 
@@ -13,7 +13,7 @@ def parseStringToArray(String arrayString){
 
     //replacing empty value with null
     def replaceEmptyValue = arrayString.replaceAll(",]",",Null]").replaceAll("\\[,","[Null,").replaceAll(",,",",Null,")
-   //replacing the first square bracket
+    //replacing the first square bracket
     arrayString = replaceEmptyValue.replaceAll("\\[",'')
     replacing
     def array = arrayString.split("]");
@@ -22,9 +22,8 @@ def parseStringToArray(String arrayString){
 
     def arrayList = new ArrayList();
 
-    //loop array of ciname1,cilocation1,CMTS1
+  
     array.each{
-        //split by , to ciname1, cilocation1, CMTS
         def subArray = it.split(",")
       //  println(subArray)
         arrayList.add(subArray)
@@ -36,24 +35,24 @@ def parseStringToArray(String arrayString){
 
 
 //parse cis
-def ciList = parseStringToArray(CIs)
-def engList = parseStringToArray(engineerList)
+def example1 = parseStringToArray(listvalu1)
+def example2 = parseStringToArray(listvalue2)
 
 
 //print
 
 
-engList.each{ eng->
-    ciList.each{ ci->
+example1.each{ ex1->
+    example2.each{ ex2->
 
 
-        println(ci[0].toString().trim())
-        println(ci[1].toString().trim())
-        println(ci[2].toString().trim())
-        println(eng[0].toString().trim())
-        println(eng[1].toString().trim())
-        println(eng[2].toString().trim())
-        println(eng[3].toString().trim())
+        println(ex1[0].toString().trim())
+        println(ex1[1].toString().trim())
+        println(ex1[2].toString().trim())
+        println(ex2[0].toString().trim())
+        println(ex2[1].toString().trim())
+        println(ex2[2].toString().trim())
+        println(ex2[3].toString().trim())
         println("\n")
 
     }
