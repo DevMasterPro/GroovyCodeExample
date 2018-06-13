@@ -1,0 +1,47 @@
+//Imports
+import com.resolve.persistence.util.EntityUtil
+
+//Defining ActionTask Status
+def condition ="BAD";
+def severity ="CRITICAL";
+def summary = "Table could not be cleared";
+def detail = "";
+
+//Variables
+def count = 0;
+def response;
+def stringBuilder = new StringBuilder();
+def tableName = INPUTS.TABLE_NAME;
+
+//Code
+try {
+    
+    response = EntityUtil.find(tableName, [:]);
+    
+    response.each { 
+        row ->
+            count++
+            EntityUtil.delete(tableName, row);
+            stringBuilder.append("${count}. Row deleted, data listed below \n\n");
+            row.each {
+                set ->
+                    stringBuilder.append("${set.getKey()}  \u2192   ${set.getValue()}\n")
+            }
+            stringBuilder.append("\n")
+    }
+    
+    condition = "GOOD";
+    severity = "GOOD";
+    summary = "Table truncated";
+    detail = stringBuilder.toString();
+    
+}
+catch(Exception ex) {
+    //Prints error message in the event of an Exception being raised.
+    detail += "Error:\n" + ex.getMessage();
+}
+
+RESULT.condition = condition;
+RESULT.severity = severity;
+RESULT.summary = summary;
+RESULT.detail = detail;
