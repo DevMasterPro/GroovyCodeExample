@@ -1,0 +1,66 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.resolve-systems.com/resolve/WebServiceListener/xsd" xmlns:xsd1="http://webservice.resolve.com/xsd">
+  <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:executeRunbookByParams>
+         <!--Optional:-->
+         <xsd:username>admin</xsd:username>
+         <!--Optional:-->
+         <xsd:password>resolve</xsd:password>
+         <!--Optional:-->
+         <xsd:runbook>VirginMedia.pushCI</xsd:runbook>
+         <!--Optional:-->
+         <xsd:problemid>new</xsd:problemid>
+         <!--Zero or more repetitions:-->
+         <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>TicketID</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value>TK12345</xsd1:value>
+         </xsd:params>
+
+         
+         <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>TaskID</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value>Task1234</xsd1:value>
+         </xsd:params>
+         
+         <xsd:params>
+            <!--Optional:-->
+            <xsd1:name></xsd1:name>
+            <!--Optional:-->
+            <xsd1:value></xsd1:value>
+         </xsd:params>
+         
+         <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>RequestType</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value>Fault Ticket</xsd1:value>
+         </xsd:params>
+         
+         <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>ProjectCode</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value>PR1234</xsd1:value>
+         </xsd:params>
+         <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>CIs</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value>[ci1,cilocation1,cmts1][ciname2,cilocation2,cmts2][ciname3,cilocation3,cmts3]</xsd1:value>
+         </xsd:params>
+
+
+          <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>EngineerList</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value>[eng1,engID1,Phone1,group1][eng2,engID2,Phone2,group2]</xsd1:value>
+         </xsd:params>
+         
+      </xsd:executeRunbookByParams>
+   </soapenv:Body>
+</soapenv:Envelope>
