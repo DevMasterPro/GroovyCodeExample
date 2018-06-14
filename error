@@ -1,0 +1,5 @@
+openssl s_client -port 31114 -host 10.143.11.34 -< openssl s_client -port 31114 -host 10.143.11.34 -t                         ls1_2 -quiet -crlf
+depth=2 C = CN, O = Huawei, CN = Huawei Equipment CA
+verify error:num=19:self signed certificate in certificate chain
+verify return:0
+Current connection exceed Max Client Num, connection closed.
