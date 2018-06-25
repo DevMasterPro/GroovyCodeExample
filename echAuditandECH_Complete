@@ -1,0 +1,21 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resolveintegration.pconnect.virginmedia.com" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<soapenv:Header>
+   <wsse:Security> 
+       <wsse:UsernameToken>
+          <wsse:Username>resolve</wsse:Username>
+      <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">R3solv3DevPswd</wsse:Password><!--R3solv3DevPswd R3s0lv3T3st -->
+       </wsse:UsernameToken>
+    </wsse:Security>
+</soapenv:Header> 
+   <soapenv:Body>
+      <res:ECHProcessUserActionRequest>
+         <actionType>ECH COMPLETE</actionType>
+         <ticketId>F005941324</ticketId>
+         <!--Optional:-->
+         <taskId>0014237490</taskId>
+         <requestType>Fault Task</requestType>
+         <!--Optional:-->
+         <auditEntry></auditEntry>
+      </res:ECHProcessUserActionRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
