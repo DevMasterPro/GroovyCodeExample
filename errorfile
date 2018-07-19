@@ -1,0 +1,17 @@
+Result : 
+ 
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+	<soap:Fault xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	         <faultcode>soap:Server</faultcode>
+	         <faultstring>ERROR (90): 90; Connection refused rem-wb-d11:3390</faultstring>
+	      </soap:Fault>
+	</soap:Body>
+	</soap:Envelope>
+	
+
+
+
+soap:Server
+
+ERROR (90): 90; Connection refused rem-wb-d11:3390
