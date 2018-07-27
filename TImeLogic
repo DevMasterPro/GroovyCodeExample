@@ -1,0 +1,28 @@
+def timeOne= 11;
+def timeTwo =13;
+def timeValue;
+
+
+def currentTime  = new Date();
+
+def formatDateAndTime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss z")
+//def currentTimeValue = formatDateAndTime.format(currentTime);
+
+//println(currentTime)
+//if (currentTimeValue.contains("BST")){
+//    use( TimeCategory ) {
+//        timeValue = currentTime + 60.minutes
+//        println(timeValue)
+//    }
+//
+//}
+
+if ( currentTime.getHours() >= timeOne  && currentTime.getHours() <= timeTwo){
+
+
+    println(" I am inside the time frame $timeOne to $timeTwo")
+
+}
+else {
+    print("nothing ")
+}
