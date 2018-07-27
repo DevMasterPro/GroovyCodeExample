@@ -1,3 +1,7 @@
+import java.text.SimpleDateFormat
+import groovy.time.TimeCategory
+
+
 def timeOne= 11;
 def timeTwo =13;
 def timeValue;
@@ -26,3 +30,5 @@ if ( currentTime.getHours() >= timeOne  && currentTime.getHours() <= timeTwo){
 else {
     print("nothing ")
 }
+
+
