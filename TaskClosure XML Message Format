@@ -1,0 +1,37 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.resolve-systems.com/resolve/WebServiceListener/xsd" xmlns:xsd1="http://webservice.resolve.com/xsd">
+ <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:executeRunbookByParams>
+         <!--Optional:-->
+         <xsd:username>a7836745</xsd:username>
+         <!--Optional:-->
+         <xsd:password>R9solv9000</xsd:password>
+         <!--Optional:-->
+         <xsd:runbook>VirginMedia.closeTicket_v1_1</xsd:runbook>
+         <!--Optional:-->
+         <xsd:problemid>new</xsd:problemid>
+         <!--Zero or more repetitions:-->
+         <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>TicketID</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value>F005946667</xsd1:value>
+         </xsd:params>
+
+         <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>TaskID</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value></xsd1:value>
+         </xsd:params>
+         
+   <xsd:params>
+            <!--Optional:-->
+            <xsd1:name>ClosureType</xsd1:name>
+            <!--Optional:-->
+            <xsd1:value>Ticket</xsd1:value>
+         </xsd:params>
+         
+      </xsd:executeRunbookByParams>
+   </soapenv:Body>
+</soap:Envelope>
