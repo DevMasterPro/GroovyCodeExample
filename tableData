@@ -1,0 +1,108 @@
+
+detail += """
+
+<div id ="con2" style="width:100%; margin-bottom: 50px;">
+
+<table id="table" style =" width: 100%;">
+  <thead role="rowgroup">
+  <tr role="row" style ="background-color: #696969;font-family: Arial;" class="header">
+    <th role="columnheader"style="width:10%;">Ticket ID</th>
+    <th role="columnheader" style="width:10%;">ECH Check</th>
+       <th role="columnheader" style="width:10%;">CI</th>
+    <th role="columnheader" style="width:10%;">Location</th>
+    <th role="columnheader" style="width:10%;">Group</th>
+    <th role="columnheader" style="width:10%;">Project Code</th>
+    <th role="columnheader" style="width:10%;">Engineer</th>
+ 
+  </tr>
+   </thead>
+  
+  <tbody role="rowgroup">
+  
+  """
+  for (i = 0; i < response.size(); i++){
+  	
+  		ticketid = response[i].get("u_ticket_id").toString()
+  		ci = response[i].get("u_ci_name").toString()
+  		location = response[i].get("u_ci_location").toString()
+  		user_group = response[i].get("u_group").toString()
+  		u_status = response[i].get("u_ticket_status").toString()
+  		pcode = response[i].get("u_project_code").toString()
+  		engineer = response[i].get("u_engineer_name").toString()
+		engineer_id = response[i].get("u_engineer_id").toString()
+		task_id = response[i].get("u_task_id").toString()
+		ticket_type = response[i].get("u_ticket_type").toString()
+		
+  detail +="""
+  <tr role="row">
+	    <td role="cell">${ticketid}</td>
+	 """ 
+
+
+detail +="""
+
+	    <td role="cell">${ci}</td>
+	    <td role="cell">${location}</td>
+	    <td role="cell">${user_group}</td>
+	    <td role="cell">${pcode}</td>
+	    <td role="cell">${engineer}</td>
+ 	"""
+
+
+ detail +="""
+     <td role="cell"> 
+ </div>
+ """
+
+ 
+ 
+if (type =="RO"){
+	
+	if (userid == engineer_id) {
+					
+	detail +="""
+		<input type="submit" class ="btnCheck" value="Check" onclick="loadLandingPage('$ticketid','$task_id','$ticket_type','$engineer_id')" />
+	"""		
+	}
+	else 
+	{
+	detail +="""
+		<input type="submit" class ="btnCheck" style ="background: #979899;" value="Check" onclick="loadLandingPage('$ticketid','$task_id','$ticket_type','$engineer_id')" disabled/>
+     """
+	}
+}
+
+
+
+if (type =="RW"){
+	detail +="""
+		<input type="submit" class ="btnCheck" value="Check" onclick="loadLandingPage('$ticketid','$task_id','$ticket_type','$engineer_id')"  />
+     """
+}
+
+
+ detail +="""
+     </td> 
+ 
+ """
+
+
+
+
+
+
+
+
+
+
+
+detail +="""
+  </tr>
+
+  """
+  	}
+  
+detail += """
+
+ </tbody>
+</table>
