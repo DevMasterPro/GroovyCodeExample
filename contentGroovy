@@ -1,0 +1,103 @@
+//Variables
+def allCallsCollected = true;
+def callCount = 0;
+def callCountUpdated = false;
+def error = false;
+def jobData = INPUTS.JOB_DATA;
+def originalCallCount = (INPUTS.OLD_CALL_COUNT ? INPUTS.OLD_CALL_COUNT : 0);
+def stringBuilder = new StringBuilder();
+//String callUpdatedon;
+//def updateDate;
+def taskStatus;
+//Code
+try {
+	
+	if (jobData) {
+		
+		jobData.each {
+			job ->
+			
+				if (job.u_user_count.toInteger() > 1) {
+					
+					INPUTS.IN_PROCESS = "true";
+					
+				}
+			
+				//Set the error status to true to indicate that an error has occured on one of the jobs.
+				if (job.u_error_message.toLowerCase().contains("error")) {
+					
+					error = true
+					
+				}
+				
+				//Checking if any of the jobs in the 'ech_jobs_queue' table do not have a 'u_call_updated' status of 'yes'
+				if (!job.u_call_updated.toLowerCase().equals("yes")) {
+					
+					//Set allCallsCollected to false in the event one of the monitors has not collected all the calls on an A-SBC.
+					allCallsCollected = false;
+					
+				}
+				
+				callCount += job.u_emc_call.toInteger();
+				
+				DEBUG.print("0000000000000000000000000\n\n" + job.sys_updated_on + "\n\n000000000000000")
+				
+				DEBUG.print("0000000000000000000000000\n\n" + job.sys_updated_on.getClass() + "\n\n000000000000000")
+				
+			
+			
+				
+				//This is to determine if information needs to be logged into the 'ech_audit_data' due to a change in the call count.
+				//Before doing this three checks are made;
+				/*
+				1.	The call count has changed from the last check on the job's call count.
+				2.	No error was logged for any of the jobs.
+				3.	All calls have been summed.
+				*/
+				
+				//getting the job Status 
+				
+				taskStatus = job.u_status.toString();
+				
+				
+		}
+		
+	} else {
+		
+		allCallsCollected = false;
+		
+	}
+	
+	if (!originalCallCount.equals(callCount) && !error && allCallsCollected) {
+	
+		//This indicates there will be a log made into the ech_audit_data table (in the assessor).
+		callCountUpdated = true;	
+		
+	}
+	
+	
+	
+	
+// 		stringBuilder.append("Date value: " +callUpdatedon)
+// updateDate = Date.parse("yyyy-MM-dd'T'HH:mm:ss",callUpdatedon).format("dd/MM/yyyy HH:mm:ss")
+} catch (Exception ex) {
+
+	//Log Error
+	stringBuilder.append("ERROR \n")
+	stringBuilder.append("${ex.getMessage()}\n\n");
+	ex.getStackTrace().each {
+		ln ->
+			stringBuilder.append("$ln\n");
+	}
+	
+}
+
+
+//Pass result from content to assessor
+//INPUTS.CALL_UPDATED_ON = updateDate
+INPUTS.CALL_COUNT = callCount;
+INPUTS.ERROR = error;
+INPUTS.RESULT = stringBuilder.toString();
+INPUTS.ALL_CALLS_COLLECTED = allCallsCollected;
+INPUTS.CALL_COUNT_UPDATED = callCountUpdated;
+INPUTS.TASK_STATUS = taskStatus;
